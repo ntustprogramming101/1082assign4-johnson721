@@ -13,7 +13,7 @@ float soldierSpeed = 2f, playerX, playerY;
 final float PLAYER_INIT_X = 4 * SOIL_SIZE, PLAYER_INIT_Y = - SOIL_SIZE;
 boolean leftState = false, rightState = false, downState = false, demoMode = false;
 
-/*void assign4setup() {
+void assign4setup() {
  bg = loadImage("img/bg.jpg");
  title = loadImage("img/title.jpg");
  gameover = loadImage("img/gameover.jpg");
@@ -49,8 +49,8 @@ boolean leftState = false, rightState = false, downState = false, demoMode = fal
  stones[i][j] = loadImage("img/stones/stone" + i + "/stone" + i + "_" + j + ".png");
  }
  }
- init();
- }*/
+ //init();
+ }
 
 /*void GAME_START() {
  image(title, 0, 0);
@@ -301,8 +301,8 @@ boolean leftState = false, rightState = false, downState = false, demoMode = fal
 
 void setup() {
   size(640, 480, P2D);
-  //assign4setup();
-  bg = loadImage("img/bg.jpg");
+  assign4setup();
+  /*bg = loadImage("img/bg.jpg");
   title = loadImage("img/title.jpg");
   gameover = loadImage("img/gameover.jpg");
   startNormal = loadImage("img/startNormal.png");
@@ -410,7 +410,7 @@ void setup() {
   for (int i = 0; i<cabbageX.length; i++) {
     cabbageX[i] = (int)random(8)*SOIL_SIZE;
     cabbageY[i] = (int)random(4)*SOIL_SIZE+SOIL_SIZE*i*4;
-  }
+  }*/
 }
 
 void draw() {
