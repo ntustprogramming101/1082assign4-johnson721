@@ -12,6 +12,7 @@ float[] cabbageX, cabbageY, soldierX, soldierY;
 float soldierSpeed = 2f, playerX, playerY;
 final float PLAYER_INIT_X = 4 * SOIL_SIZE, PLAYER_INIT_Y = - SOIL_SIZE;
 boolean leftState = false, rightState = false, downState = false, demoMode = false;
+
 void assign4setup() {
   bg = loadImage("img/bg.jpg");
   title = loadImage("img/title.jpg");
@@ -50,6 +51,7 @@ void assign4setup() {
   }
   init();
 }
+
 void GAME_START() {
   image(title, 0, 0);
   if (START_BUTTON_X + START_BUTTON_WIDTH > mouseX
@@ -65,6 +67,7 @@ void GAME_START() {
     image(startNormal, START_BUTTON_X, START_BUTTON_Y);
   }
 }
+
 void GAME_RUN() {
   image(bg, 0, 0);
   stroke(255, 255, 0);
@@ -202,6 +205,7 @@ void GAME_RUN() {
     gameState = GAME_OVER;
   }
 }
+
 void GAME_OVER() {
   image(gameover, 0, 0);
   if (START_BUTTON_X + START_BUTTON_WIDTH > mouseX
@@ -218,6 +222,7 @@ void GAME_OVER() {
     image(restartNormal, START_BUTTON_X, START_BUTTON_Y);
   }
 }
+
 void init() {
   playerX = PLAYER_INIT_X;
   playerY = PLAYER_INIT_Y;
@@ -293,6 +298,7 @@ void init() {
     cabbageY[i] = (int)random(4)*SOIL_SIZE+SOIL_SIZE*i*4;
   }
 }
+
 void keyPressed() {
   if (key==CODED) {
     switch(keyCode) {
@@ -312,6 +318,7 @@ void keyPressed() {
     }
   }
 }
+
 void keyReleased() {
   if (key==CODED) {
     switch(keyCode) {
@@ -327,10 +334,12 @@ void keyReleased() {
     }
   }
 }
+
 void setup() {
   size(640, 480, P2D);
   assign4setup();
 }
+
 void draw() {
   switch (gameState) {
   case GAME_START:
