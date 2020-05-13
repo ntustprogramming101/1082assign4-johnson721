@@ -182,8 +182,6 @@ void GAME_RUN() {
         // For requirement #3:
         // Note that player never needs to move down as it will always fall automatically,
         // so the following 2 lines can be removed once you finish requirement #3
-        playerMoveDirection = DOWN;
-        playerMoveTimer = playerMoveDuration;
         soilHealth[playerCol][playerRow+1]--;
       }
     }
