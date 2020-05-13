@@ -16,23 +16,6 @@ boolean leftState = false, rightState = false, downState = false, demoMode = fal
 void setup() {
   size(640, 480, P2D);
   assign4setup();
-}
-
-void draw() {
-  switch (gameState) {
-  case GAME_START:
-    GAME_START();
-    break;
-  case GAME_RUN:
-    GAME_RUN();
-    break;
-  case GAME_OVER:
-    GAME_OVER();
-    break;
-  }
-}
-
-void assign4setup() {
   bg = loadImage("img/bg.jpg");
   title = loadImage("img/title.jpg");
   gameover = loadImage("img/gameover.jpg");
@@ -69,6 +52,24 @@ void assign4setup() {
     }
   }
   init();
+}
+
+void draw() {
+  switch (gameState) {
+  case GAME_START:
+    GAME_START();
+    break;
+  case GAME_RUN:
+    GAME_RUN();
+    break;
+  case GAME_OVER:
+    GAME_OVER();
+    break;
+  }
+}
+
+void assign4setup() {
+
 }
 
 void GAME_START() {
