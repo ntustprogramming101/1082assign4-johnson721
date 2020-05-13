@@ -13,9 +13,85 @@ float soldierSpeed = 2f, playerX, playerY;
 final float PLAYER_INIT_X = 4 * SOIL_SIZE, PLAYER_INIT_Y = - SOIL_SIZE;
 boolean leftState = false, rightState = false, downState = false, demoMode = false;
 
+void init() {
+  playerX = PLAYER_INIT_X;
+  playerY = PLAYER_INIT_Y;
+  playerCol = (int) (playerX / SOIL_SIZE);
+  playerRow = (int) (playerY / SOIL_SIZE);
+  playerMoveTimer = 0;
+  playerHealth = 2;
+  soilHealth = new int[SOIL_COL_COUNT][SOIL_ROW_COUNT];
+  for (int i = 0; i < soilHealth.length; i++) {
+    for (int j = 0; j < soilHealth[i].length; j++) {
+      soilHealth[i][j] = 15;
+      int X = i;
+      int Y = X;
+      soilHealth[X][Y] = 30;
+    }
+  }
+  for (int i = 0; i < 8; i++) {
+    for (int j = 0; j<4; j++) {
+      int X = 6+i-j*4;
+      int Y = 8+i;
+      if (0<=X && X<8) {
+        soilHealth[X][Y] = 30;
+      }
+      int X2 = -i+1+4*j;
+      int Y2 = 8+i;
+      if (0<=X2 && X2<8) {
+        soilHealth[X2][Y2] = 30;
+      }
+    }
+  }
+  for (int i = 0; i < 8; i++) {
+    for (int j = 0; j<16; j++) {
+      if (j %3 ==1) {
+        int X = -i+j;
+        int Y = 16+i;
+        if (0<=X && X<8) {
+          soilHealth[X][Y] = 30;
+        }
+      }
+      if (j %3 ==2) {
+        int X = -i+j;
+        int Y = 16+i;
+        if (0<=X && X<8) {
+          soilHealth[X][Y] = 45;
+        }
+      }
+    }
+  }
+  for (int i = 1; i < 24; i ++) { 
+    int count = (int)random(2)+1;
+    int lastX= -1;
+    int Y = i;
+    for (int j = 0; j < count; j++) {
+      int X = (int)random(8);
+      if (lastX == X) {
+        j--;
+      } else {
+        soilHealth[X][Y] = 0;
+        lastX = X;
+      }
+    }
+  }
+  soldierX = new float[6] ;
+  soldierY = new float[6] ;
+  for (int i = 0; i<soldierX.length; i++) {
+    soldierX[i] = random(8)*SOIL_SIZE;
+    soldierY[i] = (int)random(4)*SOIL_SIZE+SOIL_SIZE*i*4;
+  }
+  cabbageX = new float[6] ;
+  cabbageY = new float[6] ;
+  for (int i = 0; i<cabbageX.length; i++) {
+    cabbageX[i] = (int)random(8)*SOIL_SIZE;
+    cabbageY[i] = (int)random(4)*SOIL_SIZE+SOIL_SIZE*i*4;
+  }
+}
+
+
 void setup() {
   size(640, 480, P2D);
-  assign4setup();
   bg = loadImage("img/bg.jpg");
   title = loadImage("img/title.jpg");
   gameover = loadImage("img/gameover.jpg");
@@ -66,10 +142,6 @@ void draw() {
     GAME_OVER();
     break;
   }
-}
-
-void assign4setup() {
-
 }
 
 void GAME_START() {
@@ -240,82 +312,6 @@ void GAME_OVER() {
     }
   } else {
     image(restartNormal, START_BUTTON_X, START_BUTTON_Y);
-  }
-}
-
-void init() {
-  playerX = PLAYER_INIT_X;
-  playerY = PLAYER_INIT_Y;
-  playerCol = (int) (playerX / SOIL_SIZE);
-  playerRow = (int) (playerY / SOIL_SIZE);
-  playerMoveTimer = 0;
-  playerHealth = 2;
-  soilHealth = new int[SOIL_COL_COUNT][SOIL_ROW_COUNT];
-  for (int i = 0; i < soilHealth.length; i++) {
-    for (int j = 0; j < soilHealth[i].length; j++) {
-      soilHealth[i][j] = 15;
-      int X = i;
-      int Y = X;
-      soilHealth[X][Y] = 30;
-    }
-  }
-  for (int i = 0; i < 8; i++) {
-    for (int j = 0; j<4; j++) {
-      int X = 6+i-j*4;
-      int Y = 8+i;
-      if (0<=X && X<8) {
-        soilHealth[X][Y] = 30;
-      }
-      int X2 = -i+1+4*j;
-      int Y2 = 8+i;
-      if (0<=X2 && X2<8) {
-        soilHealth[X2][Y2] = 30;
-      }
-    }
-  }
-  for (int i = 0; i < 8; i++) {
-    for (int j = 0; j<16; j++) {
-      if (j %3 ==1) {
-        int X = -i+j;
-        int Y = 16+i;
-        if (0<=X && X<8) {
-          soilHealth[X][Y] = 30;
-        }
-      }
-      if (j %3 ==2) {
-        int X = -i+j;
-        int Y = 16+i;
-        if (0<=X && X<8) {
-          soilHealth[X][Y] = 45;
-        }
-      }
-    }
-  }
-  for (int i = 1; i < 24; i ++) { 
-    int count = (int)random(2)+1;
-    int lastX= -1;
-    int Y = i;
-    for (int j = 0; j < count; j++) {
-      int X = (int)random(8);
-      if (lastX == X) {
-        j--;
-      } else {
-        soilHealth[X][Y] = 0;
-        lastX = X;
-      }
-    }
-  }
-  soldierX = new float[6] ;
-  soldierY = new float[6] ;
-  for (int i = 0; i<soldierX.length; i++) {
-    soldierX[i] = random(8)*SOIL_SIZE;
-    soldierY[i] = (int)random(4)*SOIL_SIZE+SOIL_SIZE*i*4;
-  }
-  cabbageX = new float[6] ;
-  cabbageY = new float[6] ;
-  for (int i = 0; i<cabbageX.length; i++) {
-    cabbageX[i] = (int)random(8)*SOIL_SIZE;
-    cabbageY[i] = (int)random(4)*SOIL_SIZE+SOIL_SIZE*i*4;
   }
 }
 
