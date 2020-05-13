@@ -13,22 +13,6 @@ float soldierSpeed = 2f, playerX, playerY;
 final float PLAYER_INIT_X = 4 * SOIL_SIZE, PLAYER_INIT_Y = - SOIL_SIZE;
 boolean leftState = false, rightState = false, downState = false, demoMode = false;
 
-void GAME_START() {
- image(title, 0, 0);
- if (START_BUTTON_X + START_BUTTON_WIDTH > mouseX
- && START_BUTTON_X < mouseX
- && START_BUTTON_Y + START_BUTTON_HEIGHT > mouseY
- && START_BUTTON_Y < mouseY) {
- image(startHovered, START_BUTTON_X, START_BUTTON_Y);
- if (mousePressed) {
- gameState = GAME_RUN;
- mousePressed = false;
- }
- } else {
- image(startNormal, START_BUTTON_X, START_BUTTON_Y);
- }
- }
-
 /*void GAME_RUN() {
  image(bg, 0, 0);
  stroke(255, 255, 0);
@@ -621,6 +605,22 @@ void draw() {
     break;
   }
 }
+
+void GAME_START() {
+ image(title, 0, 0);
+ if (START_BUTTON_X + START_BUTTON_WIDTH > mouseX
+ && START_BUTTON_X < mouseX
+ && START_BUTTON_Y + START_BUTTON_HEIGHT > mouseY
+ && START_BUTTON_Y < mouseY) {
+ image(startHovered, START_BUTTON_X, START_BUTTON_Y);
+ if (mousePressed) {
+ gameState = GAME_RUN;
+ mousePressed = false;
+ }
+ } else {
+ image(startNormal, START_BUTTON_X, START_BUTTON_Y);
+ }
+ }
 
 void keyPressed() {
   if (key==CODED) {
