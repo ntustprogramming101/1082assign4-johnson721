@@ -13,6 +13,99 @@ float soldierSpeed = 2f, playerX, playerY;
 final float PLAYER_INIT_X = 4 * SOIL_SIZE, PLAYER_INIT_Y = - SOIL_SIZE;
 boolean leftState = false, rightState = false, downState = false, demoMode = false;
 void assign4setup() {
+}
+void GAME_START() {
+}
+void GAME_RUN() {
+}
+void GAME_OVER() {
+}
+void rassign4() {
+  // Initialize player
+  playerX = PLAYER_INIT_X;
+  playerY = PLAYER_INIT_Y;
+  playerCol = (int) (playerX / SOIL_SIZE);
+  playerRow = (int) (playerY / SOIL_SIZE);
+  playerMoveTimer = 0;
+  playerHealth = 2;
+  // Initialize soilHealth
+  soilHealth = new int[SOIL_COL_COUNT][SOIL_ROW_COUNT];
+  for (int i = 0; i < soilHealth.length; i++) {
+    for (int j = 0; j < soilHealth[i].length; j++) {
+      // 0: no soil, 15: soil only, 30: 1 stone, 45: 2 stones
+      soilHealth[i][j] = 15;
+      //1-8;
+      int X = i;
+      int Y = X;
+      soilHealth[X][Y] = 30;
+    }
+  }
+  //9-16
+  for (int i = 0; i < 8; i++) {
+    for (int j = 0; j<4; j++) {
+      int X = 6+i-j*4;
+      int Y = 8+i;
+      if (0<=X && X<8) {
+        soilHealth[X][Y] = 30;
+      }
+      int X2 = -i+1+4*j;
+      int Y2 = 8+i;
+      if (0<=X2 && X2<8) {
+        soilHealth[X2][Y2] = 30;
+      }
+    }
+  }
+  //17-24
+  for (int i = 0; i < 8; i++) {
+    for (int j = 0; j<16; j++) {
+      if (j %3 ==1) {
+        int X = -i+j;
+        int Y = 16+i;
+        if (0<=X && X<8) {
+          soilHealth[X][Y] = 30;
+        }
+      }
+      if (j %3 ==2) {
+        int X = -i+j;
+        int Y = 16+i;
+        if (0<=X && X<8) {
+          soilHealth[X][Y] = 45;
+        }
+      }
+    }
+  }
+  //no soil
+  for (int i = 1; i < 24; i ++) { 
+    int count = (int)random(2)+1;
+    int lastX= -1;
+    int Y = i;
+    for (int j = 0; j < count; j++) {
+      int X = (int)random(8);
+      if (lastX == X) {
+        j--;
+      } else {
+        soilHealth[X][Y] = 0;
+        lastX = X;
+      }
+    }
+  }
+  // Initialize soidiers and their position
+  soldierX = new float[6] ;
+  soldierY = new float[6] ;
+  for (int i = 0; i<soldierX.length; i++) {
+    soldierX[i] = random(8)*SOIL_SIZE;
+    soldierY[i] = (int)random(4)*SOIL_SIZE+SOIL_SIZE*i*BLOCK;
+  }
+  // Initialize cabbages and their position
+  cabbageX = new float[6] ;
+  cabbageY = new float[6] ;
+  for (int i = 0; i<cabbageX.length; i++) {
+    cabbageX[i] = (int)random(8)*SOIL_SIZE;
+    cabbageY[i] = (int)random(4)*SOIL_SIZE+SOIL_SIZE*i*BLOCK;
+  }
+}
+void setup() {
+  size(640, 480, P2D);
   bg = loadImage("img/bg.jpg");
   title = loadImage("img/title.jpg");
   gameover = loadImage("img/gameover.jpg");
@@ -53,8 +146,10 @@ void assign4setup() {
   }
   rassign4();
 }
-void GAME_START() {
-  image(title, 0, 0);
+void draw() {
+  switch (gameState) {
+  case GAME_START:// Start Screen
+    image(title, 0, 0);
   if (START_BUTTON_X + START_BUTTON_WIDTH > mouseX
     && START_BUTTON_X < mouseX
     && START_BUTTON_Y + START_BUTTON_HEIGHT > mouseY
@@ -67,9 +162,9 @@ void GAME_START() {
   } else {
     image(startNormal, START_BUTTON_X, START_BUTTON_Y);
   }
-}
-void GAME_RUN() {
-  // Background
+    break;
+  case GAME_RUN:// In-Game
+    // Background
   image(bg, 0, 0);
   // Sun
   stroke(255, 255, 0);
@@ -249,9 +344,9 @@ void GAME_RUN() {
   if (playerHealth <= 0) {
     gameState = GAME_OVER;
   }
-}
-void GAME_OVER() {
-  image(gameover, 0, 0);
+    break;
+  case GAME_OVER:// Gameover Screen
+    image(gameover, 0, 0);
   if (START_BUTTON_X + START_BUTTON_WIDTH > mouseX
     && START_BUTTON_X < mouseX
     && START_BUTTON_Y + START_BUTTON_HEIGHT > mouseY
@@ -264,106 +359,7 @@ void GAME_OVER() {
     }
   } else {
     image(restartNormal, START_BUTTON_X, START_BUTTON_Y);
-  }
-}
-void rassign4() {
-  // Initialize player
-  playerX = PLAYER_INIT_X;
-  playerY = PLAYER_INIT_Y;
-  playerCol = (int) (playerX / SOIL_SIZE);
-  playerRow = (int) (playerY / SOIL_SIZE);
-  playerMoveTimer = 0;
-  playerHealth = 2;
-  // Initialize soilHealth
-  soilHealth = new int[SOIL_COL_COUNT][SOIL_ROW_COUNT];
-  for (int i = 0; i < soilHealth.length; i++) {
-    for (int j = 0; j < soilHealth[i].length; j++) {
-      // 0: no soil, 15: soil only, 30: 1 stone, 45: 2 stones
-      soilHealth[i][j] = 15;
-      //1-8;
-      int X = i;
-      int Y = X;
-      soilHealth[X][Y] = 30;
-    }
-  }
-  //9-16
-  for (int i = 0; i < 8; i++) {
-    for (int j = 0; j<4; j++) {
-      int X = 6+i-j*4;
-      int Y = 8+i;
-      if (0<=X && X<8) {
-        soilHealth[X][Y] = 30;
-      }
-      int X2 = -i+1+4*j;
-      int Y2 = 8+i;
-      if (0<=X2 && X2<8) {
-        soilHealth[X2][Y2] = 30;
-      }
-    }
-  }
-  //17-24
-  for (int i = 0; i < 8; i++) {
-    for (int j = 0; j<16; j++) {
-      if (j %3 ==1) {
-        int X = -i+j;
-        int Y = 16+i;
-        if (0<=X && X<8) {
-          soilHealth[X][Y] = 30;
-        }
-      }
-      if (j %3 ==2) {
-        int X = -i+j;
-        int Y = 16+i;
-        if (0<=X && X<8) {
-          soilHealth[X][Y] = 45;
-        }
-      }
-    }
-  }
-  //no soil
-  for (int i = 1; i < 24; i ++) { 
-    int count = (int)random(2)+1;
-    int lastX= -1;
-    int Y = i;
-    for (int j = 0; j < count; j++) {
-      int X = (int)random(8);
-      if (lastX == X) {
-        j--;
-      } else {
-        soilHealth[X][Y] = 0;
-        lastX = X;
-      }
-    }
-  }
-  // Initialize soidiers and their position
-  soldierX = new float[6] ;
-  soldierY = new float[6] ;
-  for (int i = 0; i<soldierX.length; i++) {
-    soldierX[i] = random(8)*SOIL_SIZE;
-    soldierY[i] = (int)random(4)*SOIL_SIZE+SOIL_SIZE*i*BLOCK;
-  }
-  // Initialize cabbages and their position
-  cabbageX = new float[6] ;
-  cabbageY = new float[6] ;
-  for (int i = 0; i<cabbageX.length; i++) {
-    cabbageX[i] = (int)random(8)*SOIL_SIZE;
-    cabbageY[i] = (int)random(4)*SOIL_SIZE+SOIL_SIZE*i*BLOCK;
-  }
-}
-void setup() {
-  size(640, 480, P2D);
-  assign4setup();
-}
-void draw() {
-  switch (gameState) {
-  case GAME_START:// Start Screen
-    GAME_START();
-    break;
-  case GAME_RUN:// In-Game
-    GAME_RUN();
-    break;
-  case GAME_OVER:// Gameover Screen
-    GAME_OVER();   
+  }  
     break;
   }
 }
@@ -387,22 +383,6 @@ void keyPressed() {
     }
   }
 }
-void keyReleased() {
-  if (key==CODED) {
-    switch(keyCode) {
-    case LEFT:
-      leftState = false;
-      break;
-    case RIGHT:
-      rightState = false;
-      break;
-    case DOWN:
-      downState = false;
-      break;
-    }
-  }
-}
-
 void keyReleased() {
   if (key==CODED) {
     switch(keyCode) {
