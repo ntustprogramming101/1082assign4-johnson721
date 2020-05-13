@@ -299,6 +299,25 @@ void init() {
   }
 }
 
+void setup() {
+  size(640, 480, P2D);
+  assign4setup();
+}
+
+void draw() {
+  switch (gameState) {
+  case GAME_START:
+    GAME_START();
+    break;
+  case GAME_RUN:
+    GAME_RUN();
+    break;
+  case GAME_OVER:
+    GAME_OVER();   
+    break;
+  }
+}
+
 void keyPressed() {
   if (key==CODED) {
     switch(keyCode) {
@@ -332,24 +351,5 @@ void keyReleased() {
       downState = false;
       break;
     }
-  }
-}
-
-void setup() {
-  size(640, 480, P2D);
-  assign4setup();
-}
-
-void draw() {
-  switch (gameState) {
-  case GAME_START:
-    GAME_START();
-    break;
-  case GAME_RUN:
-    GAME_RUN();
-    break;
-  case GAME_OVER:
-    GAME_OVER();   
-    break;
   }
 }
