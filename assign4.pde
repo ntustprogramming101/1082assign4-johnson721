@@ -89,66 +89,8 @@ void init() {
   }
 }
 
-
-void setup() {
-  size(640, 480, P2D);
-  bg = loadImage("img/bg.jpg");
-  title = loadImage("img/title.jpg");
-  gameover = loadImage("img/gameover.jpg");
-  startNormal = loadImage("img/startNormal.png");
-  startHovered = loadImage("img/startHovered.png");
-  restartNormal = loadImage("img/restartNormal.png");
-  restartHovered = loadImage("img/restartHovered.png");
-  groundhogIdle = loadImage("img/groundhogIdle.png");
-  groundhogLeft = loadImage("img/groundhogLeft.png");
-  groundhogRight = loadImage("img/groundhogRight.png");
-  groundhogDown = loadImage("img/groundhogDown.png");
-  life = loadImage("img/life.png");
-  soldier = loadImage("img/soldier.png");
-  cabbage = loadImage("img/cabbage.png");
-  stone1 = loadImage("img/stone1.png");
-  stone2 = loadImage("img/stone2.png");
-  soilEmpty = loadImage("img/soils/soilEmpty.png");
-  soil0 = loadImage("img/soil0.png");
-  soil1 = loadImage("img/soil1.png");
-  soil2 = loadImage("img/soil2.png");
-  soil3 = loadImage("img/soil3.png");
-  soil4 = loadImage("img/soil4.png");
-  soil5 = loadImage("img/soil5.png");
-  soils = new PImage[6][5];
-  for (int i = 0; i < soils.length; i++) {
-    for (int j = 0; j < soils[i].length; j++) {
-      soils[i][j] = loadImage("img/soils/soil" + i + "/soil" + i + "_" + j + ".png");
-    }
-  }
-  stones = new PImage[2][5];
-  for (int i = 0; i < stones.length; i++) {
-    for (int j = 0; j < stones[i].length; j++) {
-      stones[i][j] = loadImage("img/stones/stone" + i + "/stone" + i + "_" + j + ".png");
-    }
-  }
-  init();
-}
-
-void draw() {
-  switch (gameState) {
-  case GAME_START:
-    image(title, 0, 0);
-  if (START_BUTTON_X + START_BUTTON_WIDTH > mouseX
-    && START_BUTTON_X < mouseX
-    && START_BUTTON_Y + START_BUTTON_HEIGHT > mouseY
-    && START_BUTTON_Y < mouseY) {
-    image(startHovered, START_BUTTON_X, START_BUTTON_Y);
-    if (mousePressed) {
-      gameState = GAME_RUN;
-      mousePressed = false;
-    }
-  } else {
-    image(startNormal, START_BUTTON_X, START_BUTTON_Y);
-  }
-    break;
-  case GAME_RUN:
-    image(bg, 0, 0);
+void GAME_RUN(){
+image(bg, 0, 0);
   stroke(255, 255, 0);
   strokeWeight(5);
   fill(253, 184, 19);
@@ -283,6 +225,67 @@ void draw() {
   if (playerHealth <= 0) {
     gameState = GAME_OVER;
   }
+}
+
+void setup() {
+  size(640, 480, P2D);
+  bg = loadImage("img/bg.jpg");
+  title = loadImage("img/title.jpg");
+  gameover = loadImage("img/gameover.jpg");
+  startNormal = loadImage("img/startNormal.png");
+  startHovered = loadImage("img/startHovered.png");
+  restartNormal = loadImage("img/restartNormal.png");
+  restartHovered = loadImage("img/restartHovered.png");
+  groundhogIdle = loadImage("img/groundhogIdle.png");
+  groundhogLeft = loadImage("img/groundhogLeft.png");
+  groundhogRight = loadImage("img/groundhogRight.png");
+  groundhogDown = loadImage("img/groundhogDown.png");
+  life = loadImage("img/life.png");
+  soldier = loadImage("img/soldier.png");
+  cabbage = loadImage("img/cabbage.png");
+  stone1 = loadImage("img/stone1.png");
+  stone2 = loadImage("img/stone2.png");
+  soilEmpty = loadImage("img/soils/soilEmpty.png");
+  soil0 = loadImage("img/soil0.png");
+  soil1 = loadImage("img/soil1.png");
+  soil2 = loadImage("img/soil2.png");
+  soil3 = loadImage("img/soil3.png");
+  soil4 = loadImage("img/soil4.png");
+  soil5 = loadImage("img/soil5.png");
+  soils = new PImage[6][5];
+  for (int i = 0; i < soils.length; i++) {
+    for (int j = 0; j < soils[i].length; j++) {
+      soils[i][j] = loadImage("img/soils/soil" + i + "/soil" + i + "_" + j + ".png");
+    }
+  }
+  stones = new PImage[2][5];
+  for (int i = 0; i < stones.length; i++) {
+    for (int j = 0; j < stones[i].length; j++) {
+      stones[i][j] = loadImage("img/stones/stone" + i + "/stone" + i + "_" + j + ".png");
+    }
+  }
+  init();
+}
+
+void draw() {
+  switch (gameState) {
+  case GAME_START:
+    image(title, 0, 0);
+  if (START_BUTTON_X + START_BUTTON_WIDTH > mouseX
+    && START_BUTTON_X < mouseX
+    && START_BUTTON_Y + START_BUTTON_HEIGHT > mouseY
+    && START_BUTTON_Y < mouseY) {
+    image(startHovered, START_BUTTON_X, START_BUTTON_Y);
+    if (mousePressed) {
+      gameState = GAME_RUN;
+      mousePressed = false;
+    }
+  } else {
+    image(startNormal, START_BUTTON_X, START_BUTTON_Y);
+  }
+    break;
+  case GAME_RUN:
+    GAME_RUN();
     break;
   case GAME_OVER:
     image(gameover, 0, 0);
