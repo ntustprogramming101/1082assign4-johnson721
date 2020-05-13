@@ -19,7 +19,19 @@ void setup() {
 void draw() {
   switch (gameState) {
   case GAME_START:// Start Screen
-    GAME_START();
+    image(title, 0, 0);
+  if (START_BUTTON_X + START_BUTTON_WIDTH > mouseX
+    && START_BUTTON_X < mouseX
+    && START_BUTTON_Y + START_BUTTON_HEIGHT > mouseY
+    && START_BUTTON_Y < mouseY) {
+    image(startHovered, START_BUTTON_X, START_BUTTON_Y);
+    if (mousePressed) {
+      gameState = GAME_RUN;
+      mousePressed = false;
+    }
+  } else {
+    image(startNormal, START_BUTTON_X, START_BUTTON_Y);
+  }
     break;
   case GAME_RUN:// In-Game
     GAME_RUN();
