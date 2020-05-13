@@ -133,19 +133,7 @@ void setup() {
 void draw() {
   switch (gameState) {
   case GAME_START:
-    GAME_START();
-    break;
-  case GAME_RUN:
-    GAME_RUN();
-    break;
-  case GAME_OVER:
-    GAME_OVER();
-    break;
-  }
-}
-
-void GAME_START() {
-  image(title, 0, 0);
+    image(title, 0, 0);
   if (START_BUTTON_X + START_BUTTON_WIDTH > mouseX
     && START_BUTTON_X < mouseX
     && START_BUTTON_Y + START_BUTTON_HEIGHT > mouseY
@@ -158,10 +146,9 @@ void GAME_START() {
   } else {
     image(startNormal, START_BUTTON_X, START_BUTTON_Y);
   }
-}
-
-void GAME_RUN() {
-  image(bg, 0, 0);
+    break;
+  case GAME_RUN:
+    image(bg, 0, 0);
   stroke(255, 255, 0);
   strokeWeight(5);
   fill(253, 184, 19);
@@ -296,10 +283,9 @@ void GAME_RUN() {
   if (playerHealth <= 0) {
     gameState = GAME_OVER;
   }
-}
-
-void GAME_OVER() {
-  image(gameover, 0, 0);
+    break;
+  case GAME_OVER:
+    image(gameover, 0, 0);
   if (START_BUTTON_X + START_BUTTON_WIDTH > mouseX
     && START_BUTTON_X < mouseX
     && START_BUTTON_Y + START_BUTTON_HEIGHT > mouseY
@@ -312,6 +298,8 @@ void GAME_OVER() {
     }
   } else {
     image(restartNormal, START_BUTTON_X, START_BUTTON_Y);
+  }
+    break;
   }
 }
 
